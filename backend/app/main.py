@@ -48,16 +48,19 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS — allow configured origins + common Vercel/Render patterns
-cors_origins = settings.cors_origins_list
-# Always allow localhost for development
-if "http://localhost:3000" not in cors_origins:
-    cors_origins.append("http://localhost:3000")
+# CORS — allow configured origins + all Vercel preview URLs
+_cors_origins = settings.cors_origins_list
+if "http://localhost:3000" not in _cors_origins:
+    _cors_origins.append("http://localhost:3000")
+# Always allow the production Vercel URL
+_vercel_prod = "https://gen-ai-capstone-project-udc9-chi.vercel.app"
+if _vercel_prod not in _cors_origins:
+    _cors_origins.append(_vercel_prod)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
-    allow_origin_regex=r"https://.*\.vercel\.app",  # allow all Vercel preview URLs
+    allow_origins=_cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
