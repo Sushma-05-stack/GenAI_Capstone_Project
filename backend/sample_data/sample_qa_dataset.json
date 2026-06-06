@@ -1,0 +1,36 @@
+{
+  "name": "Sample RAG QA Dataset",
+  "description": "Example QA pairs for testing RAGAS metrics",
+  "qa_pairs": [
+    {
+      "question": "What is Retrieval-Augmented Generation?",
+      "ground_truth": "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. It retrieves relevant documents from a knowledge base and uses them as context to generate accurate, grounded responses.",
+      "context": [],
+      "metadata": {"category": "definition"}
+    },
+    {
+      "question": "What are the main benefits of using RAG over fine-tuning?",
+      "ground_truth": "RAG offers several advantages over fine-tuning: it keeps the knowledge base up-to-date without retraining, is more cost-effective, provides source attribution, and reduces hallucination by grounding answers in retrieved documents.",
+      "context": [],
+      "metadata": {"category": "comparison"}
+    },
+    {
+      "question": "What is faithfulness in RAGAS evaluation?",
+      "ground_truth": "Faithfulness in RAGAS measures whether the generated answer is factually grounded in the provided context. A high faithfulness score means the answer does not contain information that contradicts or goes beyond what is in the retrieved context.",
+      "context": [],
+      "metadata": {"category": "metrics"}
+    },
+    {
+      "question": "How does context precision differ from context recall?",
+      "ground_truth": "Context precision measures whether the retrieved chunks are relevant to the question (signal-to-noise ratio), while context recall measures whether all the information needed to answer the question is present in the retrieved context.",
+      "context": [],
+      "metadata": {"category": "metrics"}
+    },
+    {
+      "question": "What is hallucination in large language models?",
+      "ground_truth": "Hallucination in LLMs refers to the generation of plausible-sounding but factually incorrect or unsupported information. The model produces content that is not grounded in its training data or the provided context.",
+      "context": [],
+      "metadata": {"category": "definition"}
+    }
+  ]
+}
