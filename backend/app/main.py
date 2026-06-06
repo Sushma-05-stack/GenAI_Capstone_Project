@@ -48,10 +48,16 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS
+# CORS — allow configured origins + common Vercel/Render patterns
+cors_origins = settings.cors_origins_list
+# Always allow localhost for development
+if "http://localhost:3000" not in cors_origins:
+    cors_origins.append("http://localhost:3000")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # allow all Vercel preview URLs
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
