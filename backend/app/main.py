@@ -39,8 +39,8 @@ app = FastAPI(
     title=settings.APP_NAME,
     description="Enterprise RAG Evaluation Dashboard with Multi-LLM Fallback and RAGAS",
     version="1.0.0",
-    docs_url="/docs" if settings.APP_ENV != "production" else None,
-    redoc_url="/redoc" if settings.APP_ENV != "production" else None,
+    docs_url="/docs",    # always enabled so we can test on Render
+    redoc_url="/redoc",
     lifespan=lifespan,
 )
 
@@ -79,7 +79,18 @@ app.include_router(security.router, prefix="/api/v1")
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "app": settings.APP_NAME, "env": settings.APP_ENV}
+    return {
+        "status": "healthy",
+        "app": settings.APP_NAME,
+        "env": settings.APP_ENV,
+        "version": "1.0.0",
+    }
+
+
+@app.get("/")
+async def root():
+    """Root endpoint — confirms API is running."""
+    return {"message": f"{settings.APP_NAME} API is running", "docs": "/docs"}
 
 
 @app.exception_handler(Exception)
